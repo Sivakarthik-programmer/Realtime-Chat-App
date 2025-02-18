@@ -1,10 +1,19 @@
 import { X } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore";
 import { useChatStore } from "../store/useChatStore";
+import { useState } from "react";
 
 const ChatHeader = () => {
   const { selectedUser, setSelectedUser } = useChatStore();
   const { onlineUsers } = useAuthStore();
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
+
+  const handleCloseChat = () => {
+    setSelectedUser(null);
+    if (window.innerWidth < 1024) {
+      document.getElementById("sidebar").style.display = "block";
+    }
+  };
 
   return (
     <div className="p-2.5 border-b border-base-300">
@@ -30,7 +39,7 @@ const ChatHeader = () => {
         </div>
 
         {/* Close button */}
-        <button onClick={() => setSelectedUser(null)}>
+        <button onClick={handleCloseChat}>
           <X />
         </button>
       </div>

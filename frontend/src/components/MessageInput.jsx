@@ -1,11 +1,13 @@
-import { Image, Send, X } from "lucide-react";
+import { Image, Send, Smile, X } from "lucide-react";
 import React, { useState, useRef } from "react";
 import toast from "react-hot-toast";
 import { useChatStore } from "../store/useChatStore";
+import EmojiPicker from "emoji-picker-react";
 
 const MessageInput = () => {
   const [text, setText] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const fileInputRef = useRef(null);
   const { sendMessage } = useChatStore();
 
@@ -22,7 +24,8 @@ const MessageInput = () => {
     };
     reader.readAsDataURL(file);
   };
-  const removeImage = (e) => {
+
+  const removeImage = () => {
     setImagePreview(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
@@ -46,8 +49,13 @@ const MessageInput = () => {
     }
   };
 
+  const onEmojiClick = (emojiData) => {
+    setText((prevText) => prevText + emojiData.emoji);
+    setShowEmojiPicker(false);
+  };
+
   return (
-    <div className="p-4 w-full">
+    <div className="p-4 w-full relative">
       {imagePreview && (
         <div className="mb-3 flex items-center gap-2">
           <div className="relative">
@@ -70,6 +78,28 @@ const MessageInput = () => {
 
       <form onSubmit={handleSendMessage} className="flex items-center gap-2">
         <div className="flex-1 flex gap-2">
+          <button
+            onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+            className="mr-2"
+            type="button"
+          >
+            <Smile size={22} />
+          </button>
+          {showEmojiPicker && (
+            <div className="absolute bottom-16 left-0 z-50">
+              <EmojiPicker
+                onEmojiClick={onEmojiClick}
+                autoFocusSearch={false}
+                theme="dark"
+                skinTonesDisabled
+                previewConfig={{
+                  showPreview: true,
+                  defaultEmoji: "1f60d",
+                  defaultCaption: "Pick an emoji...",
+                }}
+              />
+            </div>
+          )}
           <input
             type="text"
             className="w-full input input-bordered rounded-lg input-sm sm:input-md"
