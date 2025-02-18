@@ -7,8 +7,7 @@ import { Users } from "lucide-react";
 const Sidebar = () => {
   const { getUsers, users, selectedUser, setSelectedUser, isUsersLoading } =
     useChatStore();
-
-  const { onlineUsers } = useAuthStore();
+  const { onlineUsers, authUser } = useAuthStore();
   const [showOnlineOnly, setShowOnlineOnly] = useState(false);
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
 
@@ -27,8 +26,8 @@ const Sidebar = () => {
   }, []);
 
   const filteredUsers = showOnlineOnly
-    ? users.filter((user) => onlineUsers.includes(user._id))
-    : users;
+  ? users.filter((user) => onlineUsers.includes(user._id))
+  : users;
 
   const handleUserClick = (user) => {
     setSelectedUser(user);
@@ -62,9 +61,11 @@ const Sidebar = () => {
             />
             <span className="text-sm">Show online only</span>
           </label>
-          <span className="text-xs text-zinc-500">
-            ({onlineUsers.length} online)
-          </span>
+          {onlineUsers.length > 0 && (
+            <span className="text-xs text-zinc-500">
+              ({onlineUsers.length - 1} online)
+            </span>
+          )}
         </div>
       </div>
 
