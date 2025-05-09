@@ -1,5 +1,6 @@
 💬 Realtime Chat App (MERN Stack)
-A real-time chat application built using React.js, Node.js, Express, MongoDB, and Socket.io. This project follows the tutorial "MERN Stack Project: Realtime Chat App Tutorial - React.js & Socket.io" and implements features like live messaging, user authentication, and real-time updates using WebSockets.
+A real-time chat application built using React.js, Node.js, Express, MongoDB, and Socket.io. This project follows the tutorial "MERN Stack Project: Realtime Chat App Tutorial - React.js & Socket.io" and implements features like live messaging, user authentication, and real-time updates using WebSockets.and it is responsive towards mobioe devices as well.
+
 
 🚀 Features
 ✅ Real-time messaging with Socket.io
